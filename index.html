@@ -1,0 +1,92 @@
+<!--
+    Home Page CREATED BY:
+     NAME: ADRIAN RODRIGUEZ-MARTINEZ
+     ID: 2036096
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <title>DashBoard</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./index.html">Fuel Predictor</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="./fuelQoute.html">Fuel Quote</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./fuelQouteHistory.html"
+                >Fuel Quote History</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <h1 class="text-center my-3">DashBoard</h1>
+      <p class="text-center">
+        This is the Homepage of the app, Navigate to specific sections of the
+        app to Use Our WebApp
+      </p>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Fuel Quote</h5>
+              <p class="card-text">
+                This page allows us to enter all the details about the fuel and
+                then submit it so that we can store the values in our database.
+              </p>
+              <a href="./fuelQoute.html" class="btn btn-primary"
+                >Go to Fuel Quote
+                <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Fuel Quote History</h5>
+              <p class="card-text">
+                This page allows us to view all the details of the fuel quotes
+                entered till date using the Fuel Quote page
+              </p>
+              <a href="./fuelQouteHistory.html" class="btn btn-primary"
+                >Go to Fuel Quote History
+                <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
