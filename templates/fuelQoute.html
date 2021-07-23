@@ -17,7 +17,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="./index.html">Fuel Predictor</a>
+        <a class="navbar-brand" href="/home">Fuel Predictor</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -32,21 +32,32 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" href="./fuelQoute.html">Fuel Quote</a>
+              <a class="nav-link active" href="/fuel">Fuel Quote</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./fuelQouteHistory.html"
+              <a class="nav-link" href="/fuelhis"
                 >Fuel Quote History</a
               >
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user"
+                >Profile Managment</a
+              >
+            </li>
           </ul>
+          <div class="d-flex">
+            <p class="mx-4" style="color:#fff; justify-content:center"> Welcome,{{user}}</p>
+            <a href="/">
+              <button class="btn btn-danger">LogOut</button>
+            </a>
+          </div>
         </div>
       </div>
     </nav>
     <div class="container">
       <h1 class="mt-4">Fuel Quote</h1>
       <div class="main">
-        <form class="fuel-quote">
+        <form class="fuel-quote" action="/fuel" , method="post">
           <div class="row">
             <div class="col-md-6">
               <label for="gallonreq">Gallons Requested</label>
@@ -54,56 +65,79 @@
                 type="number"
                 class="form-control"
                 id="gallonreq"
+                name="gallonreq"
+                onchange = "fn1()"
                 value="100"
                 required
               />
             </div>
             <div class="col-md-6">
               <label for="deladdress">Delivery Address:</label>
+              {% if address=="" %}
               <input
                 type="text"
                 class="form-control"
                 id="deladdress"
+                name="deladdress"
                 value="Client's Delivery Address"
-                disabled
+                readonly
               />
+              {% else %}
+              <input
+                type="text"
+                class="form-control"
+                id="deladdress"
+                name="deladdress"
+                value="{{address}}"
+                readonly
+              />
+              {% endif %}
             </div>
           </div>
           <div class="row">
             <div class="col-md-6">
-              <label for="deldate">Deivery Date</label>
+              <label for="deldate">Delivery Date</label>
               <input
                 type="date"
                 class="form-control"
                 id="deldate"
+                name="deldate"
                 maxlength="100"
+                required
               />
             </div>
             <div class="col-md-6">
               <label for="sugprice">Suggested Price per Gallon (USD)</label>
               <input
                 type="number"
-                step="any"
                 class="form-control"
                 id="sugprice"
-                value="250"
-                disabled
+                name="sugprice"
+                value= "250"
+                readonly
               />
             </div>
           </div>
           <div class="row">
             <div class="col-md-6">
-              <label for="deuamount">Total Amount Due (USD)</label>
+              <label for="dueamount">Total Amount Due (USD)</label>
               <input
                 type="number"
-                step="any"
                 class="form-control"
-                id="deuamount"
+                id="dueamount"
+                name="dueamount"
                 value="25000"
-                disabled
+                readonly
               />
             </div>
           </div>
+          <br>
+          {% if success %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Record Successfully Added!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
           <br />
           <button type="submit" class="btn btn-success">
             Submit <i class="fa fa-check" aria-hidden="true"></i>
@@ -112,5 +146,13 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function fn1(){
+        var total = document.getElementById("dueamount");
+        var per = document.getElementById("sugprice");
+        var no = document.getElementById("gallonreq");
+        total.value = no.value*per.value;
+      }
+    </script>
   </body>
 </html>
