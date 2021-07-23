@@ -76,13 +76,20 @@ def home():
 def fuel():
     global logged_in,username
     if request.method == 'GET':
-        if (logged_in==True):
-            conn = sqlite3.connect("users.db")
-            q3 = "select add1, add2 from users where username='{un}'".format(un=username)
-            row = conn.execute(q3)
-            row = row.fetchone()
-            conn.close()
+    
+        conn = sqlite3.connect("users.db")
+        q3 = "select add1, add2 from users where username='{un}'".format(un=username)
+        row = conn.execute(q3)
+        row = row.fetchone()
+        conn.close()
+        add = ""
+        if (row!=None):
+            if (row[0]==None):
+                row[0] = "" 
+            if (row[1]==None):
+                row[1] = ""
             add = row[0] + row[1] 
+        if (logged_in==True):
             return render_template('fuelQoute.html',  user=username, address =add, success= False)
         else:
             return "<h1>Login To view content!</h1>"
@@ -92,11 +99,7 @@ def fuel():
         date= str(request.form['deldate'])
         sugamt = request.form['sugprice']
         total = request.form['dueamount']
-        conn = sqlite3.connect("users.db")
-        q3 = "select add1, add2 from users where username='{un}'".format(un=username)
-        row = conn.execute(q3)
-        row = row.fetchone()
-        address = row[0]+row[1]
+        address = request.form['deladdress']
         q5 = "insert into history values ('{g}','{a}','{d}','{s}','{t}','{u}')".format(g=gallons,a=address,d=date,s=sugamt,t=total,u=username)
         conn.execute(q5)
         conn.commit()
@@ -108,13 +111,12 @@ def fuel():
 @app.route('/fuelhis')
 def fuelhis():
     global logged_in,username
+    conn = sqlite3.connect("users.db")
+    q6 = "select * from history where username = '{un}'".format(un=username)
+    rows =conn.execute(q6)
+    rows = rows.fetchall()
+    conn.close()
     if (logged_in==True):
-        conn = sqlite3.connect("users.db")
-        q6 = "select * from history where username = '{un}'".format(un=username)
-        rows =conn.execute(q6)
-        rows = rows.fetchall()
-        conn.close()
-        print(rows)
         return render_template('fuelQouteHistory.html',  user=username, data=rows)
     else:
         return "<h1>Login To view content!</h1>"
@@ -129,11 +131,12 @@ def user():
         row = row.fetchone()
         conn.close()
         values=[]
-        for i in row:
-            if (i==None):
-                values.append("")
-            else:
-                values.append(i)
+        if (row!=None):
+            for i in row:
+                if (i==None):
+                    values.append("")
+                else:
+                    values.append(i)
         if (logged_in==True):
             return render_template('userProfile.html', user=username, name=values[3], add1=values[4], add2=values[5], city=values[6], state=values[7], zipcode=values[8],success=False)
         else:
