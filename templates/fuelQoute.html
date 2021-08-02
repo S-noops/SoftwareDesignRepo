@@ -1,6 +1,6 @@
 <!-- This is made by Sanjay Paudel Id: 1908201 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,10 +9,11 @@
       rel="stylesheet"
     />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      rel="shortcut icon"
+      href="../static/favicon.ico"
+      type="image/x-icon"
     />
-    <title>Fuel Quote</title>
+    <title>Fuel Quote History</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -32,22 +33,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" href="/fuel">Fuel Quote</a>
+              <a class="nav-link" href="/fuel">Fuel Quote</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/fuelhis"
-                >Fuel Quote History</a
-              >
+              <a class="nav-link active" href="/fuelhis">Fuel Quote History</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/user"
-                >Profile Managment</a
-              >
+              <a class="nav-link" href="/user">Profile Managment</a>
             </li>
           </ul>
           <div class="d-flex">
-            <p class="mx-4" style="color:#fff; justify-content:center"> Welcome,{{user}}</p>
-            <a href="/">
+            <p class="mx-4" style="color: #fff; justify-content: center">
+              Welcome,{{user}}
+            </p>
+            <a href="{{url_for('index')}}">
               <button class="btn btn-danger">LogOut</button>
             </a>
           </div>
@@ -55,104 +54,36 @@
       </div>
     </nav>
     <div class="container">
-      <h1 class="mt-4">Fuel Quote</h1>
-      <div class="main">
-        <form class="fuel-quote" action="/fuel" , method="post">
-          <div class="row">
-            <div class="col-md-6">
-              <label for="gallonreq">Gallons Requested</label>
-              <input
-                type="number"
-                class="form-control"
-                id="gallonreq"
-                name="gallonreq"
-                onchange = "fn1()"
-                value="100"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="deladdress">Delivery Address:</label>
-              {% if address=="" %}
-              <input
-                type="text"
-                class="form-control"
-                id="deladdress"
-                name="deladdress"
-                value="Client's Delivery Address"
-                readonly
-              />
-              {% else %}
-              <input
-                type="text"
-                class="form-control"
-                id="deladdress"
-                name="deladdress"
-                value="{{address}}"
-                readonly
-              />
-              {% endif %}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label for="deldate">Delivery Date</label>
-              <input
-                type="date"
-                class="form-control"
-                id="deldate"
-                name="deldate"
-                maxlength="100"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="sugprice">Suggested Price per Gallon (USD)</label>
-              <input
-                type="number"
-                class="form-control"
-                id="sugprice"
-                name="sugprice"
-                value= "250"
-                readonly
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label for="dueamount">Total Amount Due (USD)</label>
-              <input
-                type="number"
-                class="form-control"
-                id="dueamount"
-                name="dueamount"
-                value="25000"
-                readonly
-              />
-            </div>
-          </div>
-          <br>
-          {% if success %}
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Record Successfully Added!</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          {% endif %}
-          <br />
-          <button type="submit" class="btn btn-success">
-            Submit <i class="fa fa-check" aria-hidden="true"></i>
-          </button>
-        </form>
+      <div class="container-fluid">
+        <h1 class="mt-4">Fuel Quote History</h1>
+        <div class="main">
+          <table class="fuel-quote-history table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">S.N.</th>
+                <th scope="col">Gallons Requested</th>
+                <th scope="col">Delivery Address</th>
+                <th scope="col">Delivery Date</th>
+                <th scope="col">Suggested Price per Gallon</th>
+                <th scope="col">Total Amount Due</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in data %}
+              <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}} USD</td>
+                <td>{{row[4]}} USD</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      function fn1(){
-        var total = document.getElementById("dueamount");
-        var per = document.getElementById("sugprice");
-        var no = document.getElementById("gallonreq");
-        total.value = no.value*per.value;
-      }
-    </script>
   </body>
 </html>
